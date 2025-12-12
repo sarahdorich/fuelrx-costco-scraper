@@ -25,8 +25,8 @@ deps: venv
 	$(UV) pip install -r requirements.txt
 
 playwright-install: deps
-	@echo "Installing Playwright browsers..."
-	$(VENV)/bin/playwright install
+	@echo "Installing Playwright browsers (chromium and firefox)..."
+	$(VENV)/bin/playwright install chromium firefox
 
 run:
 	@echo "Running Costco scraper..."

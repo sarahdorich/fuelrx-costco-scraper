@@ -93,12 +93,29 @@ python3 costco_scraper.py
    - Image URL
    - Product URL
    - Category
-5. **Saves to your Supabase database** in the `costco_products` table
+   - Costco product ID
+5. **Visits individual product pages** (when `SCRAPE_PRODUCT_DETAILS=True`) to extract:
+   - Product description
+   - Product details section
+   - Specifications section
+   - Nutritional info (calories, protein, carbs, fat, sodium, fiber, sugar)
+   - Serving size
+   - Ingredients
+   - Allergens
+   - Package size
+   - Unit price
+6. **Saves to your Supabase database** in the `costco_products` table
 
 ## Running Options
 
+### Fast Mode (Skip Product Details)
+If you only need basic product info and want faster scraping, set in `costco_scraper.py` line 30:
+```python
+SCRAPE_PRODUCT_DETAILS = False  # Skip visiting individual product pages
+```
+
 ### Headless Mode (No Browser Window)
-Edit `costco_scraper.py` line 195:
+Edit `costco_scraper.py` line 597:
 ```python
 browser: Browser = p.chromium.launch(headless=True)  # Change to True
 ```
@@ -168,17 +185,25 @@ const { data: affordableProducts } = await supabase
   .lte('price', 20)
 ```
 
+## Database Migrations
+
+Two migration files are provided:
+
+1. **`001_costco_products.sql`** - Creates the base table with core fields
+2. **`002_add_product_details_fields.sql`** - Adds additional fields for nutritional data
+
+Run these in order in your Supabase SQL Editor.
+
 ## Next Steps
 
 1. **Integrate with meal plans** - When Claude generates a meal plan, query the Costco database to suggest products
-2. **Add nutrition data** - Scrape detailed product pages for nutritional info
-3. **Track price history** - Instead of updating, insert new records to see price changes over time
-4. **Web scraping for recipes** - Scrape Costco's recipe section for meal prep ideas
+2. **Track price history** - Instead of updating, insert new records to see price changes over time
+3. **Web scraping for recipes** - Scrape Costco's recipe section for meal prep ideas
 
 ## Notes
 
 - Costco's website structure may change, requiring updates to selectors
 - Some products may not be available at your specific warehouse
-- Nutritional data isn't always available on category pages (may need product detail page scraping)
+- Nutritional data isn't always available on product pages - the scraper extracts what's available
 - The scraper respects Costco's servers with delays between requests
 - Consider Costco's Terms of Service regarding scraping
