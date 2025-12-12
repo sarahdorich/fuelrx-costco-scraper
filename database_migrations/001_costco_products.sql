@@ -43,7 +43,8 @@ CREATE POLICY "Authenticated users can view costco products"
     USING (auth.role() = 'authenticated');
 
 -- Only service role can insert/update/delete (for your scraper)
-CREATE POLICY "Service role can manage costco products"
-    ON costco_products FOR ALL
-    USING (auth.role() = 'service_role');
+-- CREATE POLICY "Service role can manage costco products"
+--     ON costco_products FOR ALL
+--     USING (auth.role() = 'service_role');
     
+ALTER TABLE costco_products DISABLE ROW LEVEL SECURITY;
