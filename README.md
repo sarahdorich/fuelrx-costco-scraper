@@ -6,17 +6,7 @@ This Python script scrapes Costco's website for your Sandy, UT warehouse and sto
 
 ### 1. Run the Database Migration
 
-First, apply the new migration to create the `costco_products` table:
-
-```bash
-# In your Supabase dashboard:
-# 1. Go to SQL Editor
-# 2. Copy and paste the contents of supabase/migrations/002_costco_products.sql
-# 3. Run the migration
-
-# OR use the Supabase CLI if you have it installed:
-supabase db push
-```
+All database migrations are in the [fuel-rx](https://github.com/shredstack/fuel-rx) repository.
 
 ### 2. Install Python Dependencies
 
